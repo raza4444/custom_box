@@ -1,0 +1,9 @@
+/node_modules
+/public/hot
+/public/uploads
+/public/storage
+/storage/*.key
+/vendor
+.env
+/public/uploads/*
+/public/js/app.js
