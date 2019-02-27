@@ -9,6 +9,7 @@
 				<div class="breadcrumb-content">
 					<ul>
 						<li><a href="{{ route("Home") }}">Home</a></li>
+						
 						@if(@$WebmasterSection!="none")
 						<li class="active">{!! trans('backLang.'.$WebmasterSection->name) !!}</li>
 						@elseif(@$search_word!="")

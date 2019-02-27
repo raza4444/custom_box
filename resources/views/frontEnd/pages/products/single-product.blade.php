@@ -373,7 +373,7 @@
                                             <div class="single-product">
                                                 <!-- Begin Product Image Area -->
                                                 <div class="product-img">
-                                                    <a href="single-product.html">
+                                                    <a href="{{ $topic_link_url }}">
                                                         <img class="primary-img" src="{{ URL::to('uploads/topics/'.$relatedTopic->topic->photo_file) }}" >
                                                         @if(count($Topic->photos)>0)
                                              @foreach($relatedTopic->topic->photos as $key=>$photo)

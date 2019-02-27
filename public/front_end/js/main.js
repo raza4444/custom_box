@@ -234,10 +234,10 @@ $('.qtybtn').on('click', function() {
                 items: 1
             },
             992: {
-                items: 2
+                items: 3
             },
             1200: {
-                items: 2
+                items: 3
             }
         }
     });

@@ -164,6 +164,62 @@ class FrontendHomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function error404()
+    {
+        # code...
+        //general setting
+        $WebsiteSettings = Setting::find(1);
+        $PageTitle = ""; // will show default site Title
+        
+        $site_desc_var = "site_desc_" . trans('backLang.boxCode');
+        $site_keywords_var = "site_keywords_" . trans('backLang.boxCode');
+
+        $PageDescription = $WebsiteSettings->$site_desc_var;
+        $PageKeywords = $WebsiteSettings->$site_keywords_var;
+         // General Webmaster Settings
+        $WebmasterSettings = WebmasterSetting::find(1);
+        // General for all pages
+        $WebsiteSettings = Setting::find(1);
+        $FooterMenuLinks_father = Menu::find($WebmasterSettings->footer_menu_id);
+        $FooterMenuLinks_name_ar = "";
+        $FooterMenuLinks_name_en = "";
+        if (!empty($FooterMenuLinks_father)) {
+            $FooterMenuLinks_name_ar = $FooterMenuLinks_father->title_ar;
+            $FooterMenuLinks_name_en = $FooterMenuLinks_father->title_en;
+        }
+        // Get Home page slider banners
+        $SliderBanners = Banner::where('section_id', $WebmasterSettings->home_banners_section_id)->where('status',
+            1)->orderby('row_no', 'asc')->get();
+        $WebmasterSection = WebmasterSection::where('name', 'products')->first();
+
+        $SearchCategories = Section::where('webmaster_id', '=', $WebmasterSection->id)->where('father_id', '=',
+            '0')->where('status', 1)->orderby('row_no', 'asc')->get(); 
+
+
+
+        $BottomBanners = Banner::where('section_id', $WebmasterSettings->side_banners_section_id)->where('status',
+            1)->orderby('row_no', 'asc')->get();
+        //get latest product 
+
+    //get checkout detail
+
+
+    //    
+        return view("frontEnd.pages.errors.404",
+            compact("PageTitle",
+               "PageDescription",
+               "PageKeywords",
+               "WebmasterSettings",
+               "SliderBanners",
+               "WebsiteSettings",
+               "FooterMenuLinks_name_ar",
+               "FooterMenuLinks_name_en",
+               "WebsiteSettings",
+               "BottomBanners",
+               "SearchCategories"));
+
+    }
     public function HomePage()
     {
     

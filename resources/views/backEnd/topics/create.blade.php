@@ -325,14 +325,15 @@
                         </div>
                     </div>
                 @endif
-
+                @if($WebmasterSection->id  != 9)
                 <div class="form-group row">
                     <label for="photo_file"
-                           class="col-sm-2 form-control-label">{!!  trans('backLang.topicPhoto') !!}</label>
+                           class="col-sm-2 form-control-label"> {!!  trans('backLang.topicPhoto') !!}</label>
                     <div class="col-sm-10">
                         {!! Form::file('photo_file', array('class' => 'form-control','id'=>'photo_file','accept'=>'image/*')) !!}
                     </div>
                 </div>
+                
 
                 <div class="form-group row m-t-md" style="margin-top: 0 !important;">
                     <div class="col-sm-offset-2 col-sm-10">
@@ -342,6 +343,7 @@
                         </small>
                     </div>
                 </div>
+                @endif
 
                 @if($WebmasterSection->icon_status)
                     <div class="form-group row">

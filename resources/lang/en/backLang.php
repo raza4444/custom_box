@@ -50,7 +50,7 @@ return [
     'generalSiteSettings' => 'Settings',
     'webmasterTools' => 'Webmaster',
     'generalSettings' => 'General Settings',
-    'siteSectionsSettings' => 'Site Sections',
+    'siteSectionsSettings' => 'Section Products',
     'adsBannersSettings' => 'Banners settings',
     'languageSettings' => 'Language settings',
     'siteMenus' => 'Site Menus',

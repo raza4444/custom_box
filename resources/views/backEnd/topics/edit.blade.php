@@ -520,6 +520,7 @@
                             </div>
                         @endif
 
+                         @if($WebmasterSection->id  != 9)
 
                         <div class="form-group row">
                             <label for="photo_file"
@@ -554,6 +555,7 @@
 
                             </div>
                         </div>
+                        @endif
 
                         <div class="form-group row m-t-md" style="margin-top: 0 !important;">
                             <div class="col-sm-offset-2 col-sm-10">
@@ -1779,7 +1781,8 @@
 
                                         <div class="form-group row">
                                             <label for="file_title_ar"
-                                                   class="col-sm-2 form-control-label">{!!  trans('backLang.siteSectionsSettings') !!}
+                                                   class="col-sm-2 form-control-label">
+                                                   {!!  trans('backLang.siteSectionsSettings') !!}
                                             </label>
                                             <div class="col-sm-10">
                                                 <select name="related_section_id" id="related_section_id"
@@ -1787,10 +1790,13 @@
                                                     <option value="0">- - {!!  trans('backLang.topicSelectSection') !!}
                                                         - -
                                                     </option>
-                                                    @foreach ($GeneralWebmasterSections as $WebmasterSection)
+                                                    @foreach($GeneralWebmasterSections as $ItemWebmasterSection)
+                                                   @if($ItemWebmasterSection->id == 8)
+                                                    <option selected="selected" value="{{ $ItemWebmasterSection->id  }}">{!! trans('backLang.'.$ItemWebmasterSection->name)   !!}</option>
+                                                   @endif
                                                         <?php
                                                         ?>
-                                                        <option value="{{ $WebmasterSection->id  }}">{!! trans('backLang.'.$WebmasterSection->name)   !!}</option>
+                                                       
                                                     @endforeach
                                                 </select>
                                             </div>

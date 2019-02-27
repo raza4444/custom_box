@@ -373,7 +373,16 @@ Route::get('/products', 'FrontendProductController@index')->name('FrontendProduc
 Route::post('/rfq', 'FrontendProductController@requestForQuote')->name('requestForQuote');
 Route::post('/custom-rfq', 'FrontendCustomRFQController@requestForQuote')->name('customRequestForQuote');
 
+Route::get('/checkout/{id}', 'CheckoutController@index')->name('checkout');
 
+
+//frontend customer login
+
+Route::post('/user/login', 'UserController@loginthroughcheckout')->name('userLogin');
+
+Route::get('/404', 'FrontendHomeController@error404')->name('user.account');
+
+Route::get('/404', 'FrontendHomeController@error404')->name('errorPage');
 
 
 Route::get('/{lang?}/{section}/{cat}', 'FrontendHomeController@topicsByLang')->name('FrontendTopicsByCatWithLang');
