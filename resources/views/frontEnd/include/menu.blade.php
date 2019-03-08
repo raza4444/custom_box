@@ -48,23 +48,54 @@
                                                   
                                                 <li><a href="{{$SubCategory_link_url}}">{{$MnuCategory->$category_title_var}}</a>
                                                     @if(count($MnuCategory->fatherSections)>0)
-                                                    <ul>
-                                        @foreach($MnuCategory->fatherSections as $MnusubCategory)
-                                        <?php
-                //$ccount = $category_and_topics_count[$MnusubCategory->id];
-                if ($MnuCategory->$slug_var != "" && Helper::GeneralWebmasterSettings("links_status")) {
-                    if (trans('backLang.code') != env('DEFAULT_LANGUAGE')) {
-                        $SubsubCategory_link_url = url(trans('backLang.code') . "/" . $MnusubCategory->$slug_var);
-                    } else {
-                        $SubsubCategory_link_url = url($MnusubCategory->$slug_var);
-                    }
-                } else {
-                    $SubsubCategory_link_url = route('FrontendProductsByCat', [ "cat" => $MnusubCategory->id]);
-                }
+                            <?php $products =  Helper::productsByCategory($MnuCategory->id);
+                         
+                             ?>
+                <?php
+                $product_title_var = "title_" . trans('backLang.boxCode');
+                $product_title_var2 = "title_" . trans('backLang.boxCodeOther');
+                $product_details_var = "details_" . trans('backLang.boxCode');
+                $product_details_var2 = "details_" . trans('backLang.boxCodeOther');
+                $product_slug_var = "seo_url_slug_" . trans('backLang.boxCode');
+                $product_slug_var2 = "seo_url_slug_" . trans('backLang.boxCodeOther');
+                $i = 0;
                 ?>
+                            <ul>
+                                        @foreach($products as $key=> $Topic)
+                  <?php
+                                    if ($Topic->$product_title_var != "") {
+                                        $title = $Topic->$product_title_var;
+                                    } else {
+                                        $title = $Topic->$product_title_var2;
+                                    }
+                                    if ($Topic->$product_details_var != "") {
+                                        $details = $product_details_var;
+                                    } else {
+                                        $details = $product_details_var2;
+                                    }
+                                    $section = "";
+                                    try {
+                                        if ($Topic->section->$product_title_var != "") {
+                                            $section = $Topic->section->$product_title_var;
+                                        } else {
+                                            $section = $Topic->section->$product_title_var2;
+                                        }
+                                    } catch (Exception $e) {
+                                        $section = "";
+                                    }
+                                    if ($Topic->$product_slug_var != "" && Helper::GeneralWebmasterSettings("links_status")) {
+                                        if (trans('backLang.code') != env('DEFAULT_LANGUAGE')) {
+                                            $topic_link_url = url(trans('backLang.code') . "/" . $Topic->$slug_var);
+                                        } else {
+                                            $topic_link_url = url($Topic->$slug_var);
+                                        }
+                                    } else {
+                                        $topic_link_url = route('FrontendProduct', ["id" => $Topic->id]);
+                                    }
+                                    
+                                        ?>
                                         
-                                        
-                                                        <li><a href="{{$SubsubCategory_link_url}}">{{$MnusubCategory->$category_title_var}}</a></li>
+                                                        <li><a href="{{ $topic_link_url }}">{{ $title }}</a></li>
                                                         @endforeach
                                                         
                                                     </ul>

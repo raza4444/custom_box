@@ -1071,11 +1071,17 @@
                                                                 <small><i class="material-icons">&#xe872;</i></small>
                                                             </button>
                                                         @endif
-                                                        <a style="display: block;overflow: hidden;"
+
+                                                        <div style="display: block;overflow: hidden;">
+                                                            {!! Form::text('title_'.$photo->id,$photo->title, array('class' => 'pull-left form-control','id'=>'title_name','style'=>'margin:0;margin-bottom:5px')) !!}
+                                                        </div>
+                                                        {{-- <a style="display: block;overflow: hidden;"
                                                            href="{{ URL::to('uploads/topics/'.$photo->file) }}"
                                                            target="_blank">
+                                                           
+
                                                             <small>{{ ($photo->title !="") ? $photo->title:$photo->file  }}</small>
-                                                        </a>
+                                                        </a> --}}
                                                     </div>
                                                 </div>
 

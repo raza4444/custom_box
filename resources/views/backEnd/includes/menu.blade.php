@@ -26,7 +26,7 @@ $urlAfterRoot = substr($fullPagePath, strpos($fullPagePath, env('BACKEND_PATH'))
                     </li>
 
                     <li>
-                        <a href="{{ route('adminHome') }}" onclick="location.href='{{ route('adminHome') }}'">
+                        <a href="{{ route('userHome') }}" onclick="location.href='{{ route('userHome') }}'">
                   <span class="nav-icon">
                     <i class="material-icons">&#xe3fc;</i>
                   </span>

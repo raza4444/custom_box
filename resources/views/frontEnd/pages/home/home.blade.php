@@ -7,6 +7,7 @@
         <div class="container">
             <div class="row">
                 <!-- Begin Slider Area -->
+               
                 @include('frontEnd.pages.home.container.slider')
                 <!-- Slider Area End Here -->
 

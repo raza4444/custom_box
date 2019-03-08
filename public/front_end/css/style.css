@@ -7423,3 +7423,14 @@ li.active a ul li a{
     padding: 0 0 0 10px;
     color: #a4a4a4;
    }
+
+.country-select-option
+   {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+    height: 42px;
+    width: 100%;
+    padding: 0 0 0 10px;
+    color: #a4a4a4;
+   }

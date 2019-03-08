@@ -64,7 +64,7 @@ class FrontendHomeController extends Controller
             <div style='text-align: center;'>
             <p>$site_msg</p>
             </div>
-            </body>
+            </body
             </html>
             ";
             exit();
@@ -102,6 +102,9 @@ class FrontendHomeController extends Controller
             case "home" :
             return $this->HomePage();
             break;
+            case "checkout":
+            return redirect()->route("HomePage");
+            break;
             case "about" :
             $id = 1;
             $section = 1;
@@ -122,33 +125,58 @@ class FrontendHomeController extends Controller
         $WebmasterSettings = WebmasterSetting::find(1);
         $URL_Title = "seo_url_slug_" . trans('backLang.boxCode');
 
-        $WebmasterSection1 = WebmasterSection::where("seo_url_slug_ar", $seo_url_slug)->orwhere("seo_url_slug_en", $seo_url_slug)->first();
+        $WebmasterSection1 = WebmasterSection::where("seo_url_slug_en", $seo_url_slug)->first();
         if (!empty($WebmasterSection1)) {
             // MAIN SITE SECTION
             $section = $WebmasterSection1->id;
+
             return $this->topics($section, 0);
         } else {
             $WebmasterSection2 = WebmasterSection::where('name', $seo_url_slug)->first();
             if (!empty($WebmasterSection2)) {
                 // MAIN SITE SECTION
                 $section = $WebmasterSection2->id;
-                return $this->topics($section, 0);
+                 return $this->topics($section, 0);
+                
             } else {
-                $Section = Section::where('status', 1)->where("seo_url_slug_ar", $seo_url_slug)->orwhere("seo_url_slug_en", $seo_url_slug)->first();
+                $Section = Section::where('status', 1)->where("seo_url_slug_en", $seo_url_slug)->first();
                 if (!empty($Section)) {
+
                     // SITE Category
                     $section = $Section->webmaster_id;
                     $cat = $Section->id;
-                    return $this->topics($section, $cat);
+                    if($section == '8' || $section == 8)
+                    {
+                        return app('App\Http\Controllers\FrontendProductController')->index($cat);
+                    }
+                    elseif($section == '7' || $section == 7)
+                    {
+                        return $this->topics($section, $cat);
+                    }
+                    
+                    
                 } else {
                     $Topic = Topic::where('status', 1)->where("seo_url_slug_ar", $seo_url_slug)->orwhere("seo_url_slug_en", $seo_url_slug)->first();
                     if (!empty($Topic)) {
                         // SITE Topic
                         $section_id = $Topic->webmaster_id;
                         $WebmasterSection = WebmasterSection::find($section_id);
-                        $section = $WebmasterSection->name;
+                        
                         $id = $Topic->id;
-                        return $this->topic($section, $id);
+                        if($WebmasterSection->name == 'products')
+                        {
+                            return app('App\Http\Controllers\FrontendProductController')->show($id);
+                        }
+                        elseif($WebmasterSection->name == 'blog')
+                        {
+                           return app('App\Http\Controllers\FrontendBlogController')->show($id); 
+                        }
+                        else
+                        {
+                           return redirect()->route("HomePage");    
+                        }
+                        
+                        
                     } else {
                         // Not found
                         return redirect()->route("HomePage");
@@ -245,6 +273,8 @@ $WebsiteSettings = Setting::find(1);
         // Get Home page slider banners
         $SliderBanners = Banner::where('section_id', $WebmasterSettings->home_banners_section_id)->where('status',
             1)->orderby('row_no', 'asc')->get();
+
+
         $WebmasterSection = WebmasterSection::where('name', 'products')->first();
 
         $SearchCategories = Section::where('webmaster_id', '=', $WebmasterSection->id)->where('father_id', '=',
@@ -465,12 +495,14 @@ $WebsiteSettings = Setting::find(1);
                 $site_keywords_var = "site_keywords_" . trans('backLang.boxCode');
                 if ($CurrentCategory->$seo_title_var != "") {
                     $PageTitle = $CurrentCategory->$seo_title_var;
-                } else {
+                }
+                else {
                     $PageTitle = $CurrentCategory->$tpc_title_var;
                 }
                 if ($CurrentCategory->$seo_description_var != "") {
                     $PageDescription = $CurrentCategory->$seo_description_var;
-                } else {
+                }
+                else {
                     $PageDescription = $WebsiteSettings->$site_desc_var;
                 }
                 if ($CurrentCategory->$seo_keywords_var != "") {
@@ -498,7 +530,7 @@ $WebsiteSettings = Setting::find(1);
             {
                 return view("frontEnd.pages.blogs.index",
                     compact("WebsiteSettings",
-                        "WebmasterSettings",
+                       "WebmasterSettings",
                         "FooterMenuLinks_name_ar",
                         "FooterMenuLinks_name_en",
                         "LatestNews",
@@ -1504,4 +1536,61 @@ return $mianCategoryProducts;
 }
 }
 
+
+public function showSignInFront()
+{
+    # code...
+        //general setting
+        $WebsiteSettings = Setting::find(1);
+        $PageTitle = ""; // will show default site Title
+        
+        $site_desc_var = "site_desc_" . trans('backLang.boxCode');
+        $site_keywords_var = "site_keywords_" . trans('backLang.boxCode');
+
+        $PageDescription = $WebsiteSettings->$site_desc_var;
+        $PageKeywords = $WebsiteSettings->$site_keywords_var;
+         // General Webmaster Settings
+        $WebmasterSettings = WebmasterSetting::find(1);
+        // General for all pages
+        $WebsiteSettings = Setting::find(1);
+        $FooterMenuLinks_father = Menu::find($WebmasterSettings->footer_menu_id);
+        $FooterMenuLinks_name_ar = "";
+        $FooterMenuLinks_name_en = "";
+        if (!empty($FooterMenuLinks_father)) {
+            $FooterMenuLinks_name_ar = $FooterMenuLinks_father->title_ar;
+            $FooterMenuLinks_name_en = $FooterMenuLinks_father->title_en;
+        }
+        // Get Home page slider banners
+        $SliderBanners = Banner::where('section_id', $WebmasterSettings->home_banners_section_id)->where('status',
+            1)->orderby('row_no', 'asc')->get();
+        $WebmasterSection = WebmasterSection::where('name', 'products')->first();
+
+        $SearchCategories = Section::where('webmaster_id', '=', $WebmasterSection->id)->where('father_id', '=',
+            '0')->where('status', 1)->orderby('row_no', 'asc')->get(); 
+
+
+
+        $BottomBanners = Banner::where('section_id', $WebmasterSettings->side_banners_section_id)->where('status',
+            1)->orderby('row_no', 'asc')->get();
+        //get latest product 
+
+    //get checkout detail
+
+
+    //    
+        return view("frontEnd.pages.auth.login-register",
+            compact("PageTitle",
+               "PageDescription",
+               "PageKeywords",
+               "WebmasterSettings",
+               "SliderBanners",
+               "WebsiteSettings",
+               "FooterMenuLinks_name_ar",
+               "FooterMenuLinks_name_en",
+               "WebsiteSettings",
+               "BottomBanners",
+               "SearchCategories"));
+
+   
+}
 }

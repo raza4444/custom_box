@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+ Route::post('/processing-order', 'OrderController@orderByPaypal')->name('orderByPaypal');
+
+ Route::post('/processing-order-stripe', 'OrderController@orderByStripe')->name('orderByStripe');
+ 
+

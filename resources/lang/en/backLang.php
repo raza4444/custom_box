@@ -67,7 +67,7 @@ return [
     'add' => '&nbsp;&nbsp;Add&nbsp;&nbsp;',
     'update' => 'Save Changes',
     'save' => 'Save',
-    'saveOrder' => 'Save Order',
+    'saveOrder' => 'Save Order & title',
     'edit' => 'Edit',
     'delete' => 'Delete',
     'undoDelete' => 'Undo Delete',

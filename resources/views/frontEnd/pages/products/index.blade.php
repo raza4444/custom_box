@@ -116,7 +116,7 @@
 
 												<a href="{{ $topic_link_url }}">
 													@if($Topic->photo_file !="")
-													<img class="primary-img" src="{{ URL::to('uploads/topics/'.$Topic->photo_file) }}" >
+													<img class="primary-img" src="{{ URL::to('uploads/topics/'.$Topic->photo_file) }}" alt="{{ $title }}" >
 													@endif
 													@if(count($Topic->photos)>0)
 											 @foreach($Topic->photos as $key=>$photo)

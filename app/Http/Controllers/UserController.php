@@ -65,6 +65,30 @@ class UserController extends Controller
         }
     }
 
+    public function customerLogin(Request $request)
+    {
+
+        //
+         $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($credentials)) {
+             
+              return redirect()->route('userHome');
+        }
+        else
+        {
+            return redirect('404');
+        }
+    }
+
         //return redirect()->back()->withInput($request->only('email'));
       
 

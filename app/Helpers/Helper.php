@@ -11,6 +11,7 @@ use App\Country;
 use App\Event;
 use App\Menu;
 use App\Section;
+use App\TopicCategory;
 use App\Setting;
 use App\Topic;
 use App\Webmail;
@@ -34,6 +35,27 @@ class Helper
         return $Setting->$var;
     }
 
+    static function productsByCategory($category_id)
+    {
+
+         $WebmasterSection = WebmasterSection::where('name', 'products')->first();
+        $CurrentCategory = Section::find($category_id);
+        if (!empty($CurrentCategory)) {
+                $category_topics = array();
+                $TopicCategories = TopicCategory::where('section_id',$category_id )->get();
+                foreach ($TopicCategories as $category) {
+                    $category_topics[] = $category->topic_id;
+                }
+                // update visits
+                $CurrentCategory->visits = $CurrentCategory->visits + 1;
+                $CurrentCategory->save();
+                // Topics by Cat_ID
+               return $Topics = Topic::where([['webmaster_id', '=', $WebmasterSection->id], ['status', 1], ['expire_date', '>=', date("Y-m-d")], ['expire_date', '<>', null]])->orWhere([['webmaster_id', '=', $WebmasterSection->id], ['status', 1], ['expire_date', null]])->whereIn('id', $category_topics)->orderby('row_no', 'asc')->paginate(env('FRONTEND_PAGINATION'));
+                // Get Most Viewed Topics fot this Category
+                
+            }
+
+    }
     // Get Events Alerts
     static function eventsAlerts()
     {

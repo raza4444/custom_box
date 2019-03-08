@@ -46,7 +46,7 @@
                                             <li><a href="{{ url("user") }}"> {{ Auth::user()->name }}</a></li>
                                             <li><a href="{{ url('logout') }}">Logout</a></li>
                                            @else
-                                            <li><a href="{{ url("user") }}">Sign In</a>/<a href="{{ url("user") }}">Sign Up </a></li>
+                                            <li><a href="{{ route('accountLogin') }}">Sign In</a>/<a href="{{ route('accountLogin') }}">Sign Up </a></li>
                                         @endif
                                         @endif
                                         </ul>

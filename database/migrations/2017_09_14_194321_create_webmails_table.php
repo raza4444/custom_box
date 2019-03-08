@@ -31,6 +31,7 @@ class CreateWebmailsTable extends Migration
             $table->string('to_bcc')->nullable();
             $table->tinyInteger('status')->default("0");
             $table->tinyInteger('flag')->default("0");
+            $table->integer('order_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();

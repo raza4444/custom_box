@@ -18,9 +18,16 @@ use App\WebmasterSection;
 use App\WebmasterSetting;
 use Illuminate\Http\Request;
 use Mail;
-
+use App\Services\CountriesService;
 class CheckoutController extends Controller
 {
+    private $countries;
+    public function __construct(CountriesService $countries)
+    {
+
+        $this->countries = $countries;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +35,6 @@ class CheckoutController extends Controller
      */
     public function index($id)
     {
-
         //general setting
         $WebsiteSettings = Setting::find(1);
         $PageTitle = ""; // will show default site Title
@@ -76,6 +82,8 @@ class CheckoutController extends Controller
             $topic_id = $id;
             $Topic = Topic::where('status', 1)->find($id);
             if (!empty($Topic) && ($Topic->expire_date == '' || ($Topic->expire_date != '' && $Topic->expire_date >= date("Y-m-d")))) {
+        $countries = $this->countries->countriesArray();
+       
             return view("frontEnd.pages.checkout.index",
             compact("PageTitle",
                "PageDescription",
@@ -90,7 +98,8 @@ class CheckoutController extends Controller
                "BottomBanners",
                "SearchCategories",
                 "Topic",
-                "topic_id"));
+                "topic_id",
+                "countries"));
     
 
             }
